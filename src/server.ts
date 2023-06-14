@@ -1,12 +1,21 @@
-import start from "./app";
+import express from 'express'
+import cors from 'cors'
 
-const app = start({ logger: true });
+import router from './routes/router'
 
-app
-  .listen({
+
+const app = express();
+
+
+app.use(cors())
+app.use(express.json())
+app.use(router)
+
+
+app.listen({
     host: "0.0.0.0",
-    port: process.env.PORT ? Number(process.env.PORT) : 3333,
+    port: process.env.PORT ? Number(process.env.PORT) : 3000,
+  }, () => {
+    console.log("Server Running port:3000");
   })
-  .then(() => {
-    console.log("Server Running");
-  });
+  

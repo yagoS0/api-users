@@ -1,17 +1,18 @@
 import { PrismaClient } from "@prisma/client";
-import { FastifyReply, FastifyRequest } from "fastify";
+import { Response, Request } from "express";
 import { z } from "zod";
 
 const prisma = new PrismaClient();
 
 export async function getUser(): Promise<{}> {
   const users = await prisma.user.findMany();
+  console.log('sucesso')
   return { users };
 }
 
-export async function setUser(
-  request: FastifyRequest,
-  reply: FastifyReply
+export async function createUser(
+  request: Request,
+  response: Response
 ): Promise<{}> {
   const createUserSchema = z.object({
     name: z.string(),
@@ -29,5 +30,5 @@ export async function setUser(
     },
   });
 
-  return reply.status(201).send("Enviado com sucesso!");
+  return response.status(201).send("Enviado com sucesso!");
 }
